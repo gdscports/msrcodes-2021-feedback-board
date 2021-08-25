@@ -5,7 +5,7 @@ import type {AppProps} from 'next/app';
 import {useMemo} from 'react';
 
 import createEmotionCache from '../helpers/createEmotionCache';
-import firebase from '../helpers/firebase';
+import useAnalytics from '../helpers/useAnalytics';
 
 import Layout from '../components/Layout';
 
@@ -32,7 +32,7 @@ const App = ({
     [prefersDarkMode]
   );
 
-  console.log(firebase.app());
+  useAnalytics();
 
   return (
     <CacheProvider value={emotionCache}>
