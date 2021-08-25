@@ -14,9 +14,7 @@
     "export": "next export",
     "fix": "gts fix",
     "lint": "gts lint",
-    "prepare": "yarn build && husky install",
-    "pretest": "yarn build",
-    "posttest": "yarn lint",
+    "prepare": "husky install",
     "start": "next start"
   },
   "devDependencies": {
