@@ -13,6 +13,7 @@ export const clientCredentials = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(clientCredentials);
+  firebase.analytics();
 }
 
 export default firebase;
