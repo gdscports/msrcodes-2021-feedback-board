@@ -42,7 +42,9 @@
     "clsx": "^1.1.1",
     "firebase": "^8.10.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-firebase-hooks": "^3.0.4",
+    "react-firebaseui": "^5.0.2"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "yarn lint"

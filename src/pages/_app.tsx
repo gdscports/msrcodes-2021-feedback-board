@@ -6,6 +6,7 @@ import {useMemo} from 'react';
 
 import createEmotionCache from '../helpers/createEmotionCache';
 import useAnalytics from '../helpers/useAnalytics';
+import useAuth from '../helpers/useAuth';
 
 import Layout from '../components/Layout';
 
@@ -34,6 +35,14 @@ const App = ({
 
   useAnalytics();
 
+  // Ensure user is logged in
+  const {isAuthed, message} = useAuth();
+
+  if (!isAuthed) {
+    return <>{message}</>;
+  }
+
+  // Otherwise, load page
   return (
     <CacheProvider value={emotionCache}>
       <ThemeProvider theme={theme}>
