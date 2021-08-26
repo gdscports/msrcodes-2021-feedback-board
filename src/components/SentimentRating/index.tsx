@@ -43,13 +43,18 @@ const IconContainer = (props: IconContainerProps) => {
   );
 };
 
-const RadioGroupRating = () => (
+interface RadioGroupRatingProps {
+  onChange: (f: number) => void;
+}
+
+const RadioGroupRating = ({onChange}: RadioGroupRatingProps) => (
   <Rating
-    defaultValue={3}
+    defaultValue={null}
     IconContainerComponent={IconContainer}
     highlightSelectedOnly
     size="large"
     sx={{margin: 'auto'}}
+    onChange={(_event, newValue) => onChange(newValue)}
   />
 );
 

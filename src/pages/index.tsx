@@ -30,18 +30,34 @@ const questions: Question[] = [
   },
 ];
 
+interface Responses {
+  [k: string]: string;
+}
+
 const Homepage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [activeQuestion, setActiveQuestion] = useState<Question>(
     questions[activeStep]
   );
 
+  const [sentimentValue, setSentimentValue] = useState<number>(null);
+  const [freetextValue, setFreetextValue] = useState<string>(null);
+
+  const [responses, setResponses] = useState<Responses>({});
+
+  // TODO: get user id
+  // TODO: submit to firebase database
+  // TODO: redirect to results page on final submission
+  if (Object.keys(responses).length === questions.length) {
+    console.log(responses);
+  }
+
   useEffect(() => {
     setActiveQuestion(questions[activeStep]);
   }, [activeStep]);
 
   return (
-    <main style={{}}>
+    <main>
       <HeroSection>
         <Typography
           component="h1"
@@ -103,6 +119,8 @@ const Homepage = () => {
               <Box sx={{display: 'flex', flexDirection: 'column'}}>
                 {activeQuestion.type === 'freetext' && (
                   <TextField
+                    key={activeQuestion.label + '-textfield'}
+                    onChange={e => setFreetextValue(e.target.value)}
                     label="Your Thoughts"
                     variant="outlined"
                     multiline
@@ -110,13 +128,38 @@ const Homepage = () => {
                     required
                   />
                 )}
-                {activeQuestion.type === 'sentiment' && <SentimentRating />}
+                {activeQuestion.type === 'sentiment' && (
+                  <SentimentRating
+                    key={activeQuestion.label + '-sentiment'}
+                    onChange={val => {
+                      setSentimentValue(val);
+                    }}
+                  />
+                )}
               </Box>
               <Box sx={{display: 'flex', my: 4}}>
                 <Button
-                  onClick={() => setActiveStep(activeStep + 1)}
+                  onClick={() => {
+                    setActiveStep(activeStep + 1);
+
+                    switch (activeQuestion.type) {
+                      case 'sentiment':
+                        setResponses({
+                          [activeQuestion.text]: String(sentimentValue),
+                          ...responses,
+                        });
+                        break;
+                      case 'freetext':
+                        setResponses({
+                          [activeQuestion.text]: String(freetextValue),
+                          ...responses,
+                        });
+                        break;
+                    }
+                  }}
                   variant="contained"
                   sx={{mx: 'auto'}}
+                  disabled={sentimentValue === null}
                 >
                   {activeStep === questions.length - 1 ? 'Complete' : 'Next'}
                 </Button>
