@@ -5,7 +5,7 @@ import Footer from '../Footer';
 
 const Layout = ({children}: PropsWithChildren<{}>) => (
   <>
-    <Header title="Gallery Site" />
+    <Header title="GDSC Feedback Capture" />
     {children}
     <Footer />
   </>
