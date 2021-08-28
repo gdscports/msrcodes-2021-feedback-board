@@ -3,7 +3,9 @@ import {Box, Button, TextField, Typography} from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import {useEffect, useState} from 'react';
 import {GetStaticProps, NextPage} from 'next';
+import {useAuthState} from 'react-firebase-hooks/auth';
 
+import firebase from '../helpers/firebase';
 import {getQuestions} from '../helpers/database';
 import {Question} from '../helpers/database/types';
 
@@ -29,11 +31,12 @@ const Homepage: NextPage<HomepageProps> = ({questions}) => {
 
   const [responses, setResponses] = useState<Responses>({});
 
-  // TODO: get user id
+  const [user] = useAuthState(firebase.auth());
+
   // TODO: submit to firebase database
   // TODO: redirect to results page on final submission
   if (Object.keys(responses).length === questions.length) {
-    console.log(responses);
+    console.log(user.uid, responses);
   }
 
   useEffect(() => {
