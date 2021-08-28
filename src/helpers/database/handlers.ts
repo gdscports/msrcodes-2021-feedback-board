@@ -15,17 +15,23 @@ const getConverter = <T>() => ({
   },
 });
 
+const getTypedCollection = <T>(fromCollection: Collections) => {
+  const firestore = firebase.firestore();
+  const converter = getConverter<T>();
+
+  const collection = firestore
+    .collection(fromCollection)
+    .withConverter(converter);
+
+  return collection;
+};
+
 export const getFromFirestore = async <T>(
   fromCollection: Collections,
   defaultData: T[]
 ): Promise<T[]> => {
-  const firestore = firebase.firestore();
-  const converter = getConverter<T>();
-
   // Create a typed collection
-  const collection = firestore
-    .collection(fromCollection)
-    .withConverter(converter);
+  const collection = getTypedCollection<T>(fromCollection);
 
   // Get results from collection
   const results = await collection.get();
