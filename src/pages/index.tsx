@@ -4,7 +4,8 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import {useEffect, useState} from 'react';
 import {GetStaticProps, NextPage} from 'next';
 
-import {Question, getQuestions} from '../helpers/database';
+import {getQuestions} from '../helpers/database';
+import {Question} from '../helpers/database/types';
 
 import HeroSection from '../components/Hero';
 import SentimentRating from '../components/SentimentRating';
