@@ -2,39 +2,22 @@ import {Step, StepLabel, Stepper} from '@material-ui/core';
 import {Box, Button, TextField, Typography} from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import {useEffect, useState} from 'react';
+import {GetStaticProps, NextPage} from 'next';
+
+import {Question, getQuestions} from '../helpers/database';
 
 import HeroSection from '../components/Hero';
 import SentimentRating from '../components/SentimentRating';
-
-interface Question {
-  label: string;
-  text: string;
-  type: 'sentiment' | 'freetext';
-}
-
-const questions: Question[] = [
-  {
-    label: 'Enjoyment',
-    text: 'How much did you enjoy this event?',
-    type: 'sentiment',
-  },
-  {
-    label: 'Learning',
-    text: 'How much did you learn from this event?',
-    type: 'sentiment',
-  },
-  {
-    label: 'Question',
-    text: 'Based on this event, what question would you like to ask?',
-    type: 'freetext',
-  },
-];
 
 interface Responses {
   [k: string]: string;
 }
 
-const Homepage = () => {
+interface HomepageProps {
+  questions: Question[];
+}
+
+const Homepage: NextPage<HomepageProps> = ({questions}) => {
   const [activeStep, setActiveStep] = useState(0);
   const [activeQuestion, setActiveQuestion] = useState<Question>(
     questions[activeStep]
@@ -170,6 +153,12 @@ const Homepage = () => {
       </HeroSection>
     </main>
   );
+};
+
+export const getStaticProps: GetStaticProps<HomepageProps> = async () => {
+  const questions = await getQuestions();
+
+  return {props: {questions}, revalidate: 60};
 };
 
 export default Homepage;
