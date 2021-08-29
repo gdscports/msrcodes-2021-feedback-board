@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "bootstrap": "yarn; lerna bootstrap;",
-    "lint": "lerna run lint",
+    "lint": "lerna run --concurrency 1 --stream lint",
     "pkg:api": "lerna run --scope api --stream",
     "pkg:web": "lerna run --scope web --stream",
     "prepare": "husky install"

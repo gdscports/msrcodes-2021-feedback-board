@@ -9,6 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: 🔨 Install Dependencies
-        run: yarn
+        run: yarn bootstrap
       - name: 🧤 Lint
         run: yarn lint
